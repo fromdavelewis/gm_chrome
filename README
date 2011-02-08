@@ -1,6 +1,8 @@
 This project is a chrome extension for gitmarks.
 
+Currently this project just implements the tutorial here:
 https://code.google.com/chrome/extensions/getstarted.html
+
 
 This page might suck, not sure:
 http://devlicio.us/blogs/sergio_pereira/archive/2010/06/28/chrome-extension-development.aspx
