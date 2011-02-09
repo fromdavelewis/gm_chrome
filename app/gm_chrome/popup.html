@@ -28,12 +28,10 @@ function loadDelTags() {
 var delInfo;
 var delTags = "";
 function parseDelTags() {
-    console.log(req0.responseText);
     delInfo = eval(req0.responseText);
     for (var key in delInfo[0].top_tags) {
         delTags += key + " ";
     }
-    console.log(delTags);
     loadGitmark();
 }
 
