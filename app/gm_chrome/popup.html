@@ -6,21 +6,51 @@ body {
 
 </style>
 
+<script language="javascript" src="md5.js"></script>
+
 <script>
-var req1 = new XMLHttpRequest();
+var req0 = new XMLHttpRequest();
+var url;
 chrome.tabs.getSelected(null, function(tab) {
-req1.open(
-    "GET",
-    "http://localhost:44865/new?url=" +
-    tab.url,
-    true);
-req1.onload = saveGitmark;
-req1.send(null);
+    url = tab.url;
+    loadDelTags();
 });
 
+function loadDelTags() {
+    req0.open(
+        'GET',
+        'http://feeds.delicious.com/v2/json/urlinfo/'+hex_md5(url),
+        true);
+    req0.onload = parseDelTags;
+    req0.send(null);
+}
+
+var delInfo;
+var delTags = "";
+function parseDelTags() {
+    console.log(req0.responseText);
+    delInfo = eval(req0.responseText);
+    for (var key in delInfo[0].top_tags) {
+        delTags += key + " ";
+    }
+    console.log(delTags);
+    loadGitmark();
+}
+
+var req1 = new XMLHttpRequest();
+function loadGitmark() {
+    req1.open(
+        'GET',
+        'http://localhost:44865/new?url=' +
+        url,
+        true);
+    req1.onload = saveGitmark;
+    req1.send(null);
+}
+
 function saveGitmark() {
-  var savePage = req1.responseText.replace(/action="create"/, 'action="http://localhost:44865/create"');
-  document.write(savePage);
+    var savePage = req1.responseText.replace(/action="create"/, 'action="http://localhost:44865/create"').replace(/name="tags" value="" class/, 'name="tags" value="'+delTags+'" class');
+    document.write(savePage);
 }
 
 </script>
