@@ -8,13 +8,15 @@ body {
 
 <script>
 var req1 = new XMLHttpRequest();
+chrome.tabs.getSelected(null, function(tab) {
 req1.open(
     "GET",
     "http://localhost:44865/new?url=" +
-    chrome.tabs.getCurrent.url,
+    tab.url,
     true);
 req1.onload = saveGitmark;
 req1.send(null);
+});
 
 function saveGitmark() {
 //  alert(req1);
