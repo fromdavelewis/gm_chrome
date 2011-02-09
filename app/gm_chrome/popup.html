@@ -19,9 +19,8 @@ req1.send(null);
 });
 
 function saveGitmark() {
-//  alert(req1);
-//  alert(req1.responseText)
-  document.write(req1.responseText);
+  var savePage = req1.responseText.replace(/action="create"/, 'action="http://localhost:44865/create"');
+  document.write(savePage);
 }
 
 </script>
