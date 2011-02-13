@@ -4,7 +4,13 @@ Add to gitmarks local service popup. (DONE -- DL)
 
 Original icon
 
+Originally: http://www.clipartpal.com/clipart_pd/education/goldstar_10801.html
 Icon changes state for "added", "already a bookmark", or "add this bookmark"
+Starting up: Black for now
+Can't find service: Red
+Added: Flash yellow to green?
+Already: Green
+Add: Yellow
 
 click icon adds w/ no popup
 
