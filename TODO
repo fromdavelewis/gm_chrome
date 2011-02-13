@@ -1,3 +1,13 @@
 Load list from local service.
 
-Add to gitmarks local service popup.
+Add to gitmarks local service popup. (DONE -- DL)
+
+Original icon
+
+Icon changes state for "added", "already a bookmark", or "add this bookmark"
+
+click icon adds w/ no popup
+
+config page for hostname
+
+
