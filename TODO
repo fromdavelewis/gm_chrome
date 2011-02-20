@@ -2,7 +2,7 @@ Load list from local service.
 
 Add to gitmarks local service popup. (DONE -- DL)
 
-Original icon
+Original icon (DONE -- DL)
 
 Originally: http://www.clipartpal.com/clipart_pd/education/goldstar_10801.html
 Icon changes state for "added", "already a bookmark", or "add this bookmark"
@@ -14,6 +14,11 @@ Add: Yellow
 
 click icon adds w/ no popup
 
-config page for hostname
+config page for hostname (DONE -- DL)
+
+Make delicious failure better.
+
+Abstract bookmark backend.
+
 
 
