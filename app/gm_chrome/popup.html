@@ -37,9 +37,10 @@ function parseDelTags() {
 
 var req1 = new XMLHttpRequest();
 function loadGitmark() {
+    alert(localStorage["hostPort"] + '/new?url=');
     req1.open(
         'GET',
-        'http://localhost:44865/new?url=' +
+        localStorage["hostPort"] + '/new?url=' +
         url,
         true);
     req1.onload = saveGitmark;
@@ -47,7 +48,7 @@ function loadGitmark() {
 }
 
 function saveGitmark() {
-    var savePage = req1.responseText.replace(/action="create"/, 'action="http://localhost:44865/create"').replace(/name="tags" value="" class/, 'name="tags" value="'+delTags+'" class');
+    var savePage = req1.responseText.replace(/action="create"/, 'action="'+localStorage["hostPort"]+'/create"').replace(/name="tags" value="" class/, 'name="tags" value="'+delTags+'" class');
     document.write(savePage);
 }
 
