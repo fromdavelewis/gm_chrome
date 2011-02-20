@@ -29,8 +29,10 @@ var delInfo;
 var delTags = "";
 function parseDelTags() {
     delInfo = eval(req0.responseText);
-    for (var key in delInfo[0].top_tags) {
-        delTags += key + " ";
+    if (delInfo && delInfo[0] && delInfo[0].top_tags) {
+        for (var key in delInfo[0].top_tags) {
+            delTags += key + " ";
+        }
     }
     loadGitmark();
 }
