@@ -4,26 +4,43 @@
 
 // Saves options to localStorage.
 function save_options() {
-  var hostPortText = document.getElementById("hostPortText");
-  var hostPort = hostPortText.value;
-  localStorage["hostPort"] = hostPort;
+    var hostPortText = document.getElementById("hostPortText");
+    var hostPort = hostPortText.value;
+    localStorage["hostPort"] = hostPort;
+    console.log("HP:"+hostPort);
 
-  // Update status to let user know options were saved.
-  var status = document.getElementById("status");
-  status.innerHTML = "Options Saved.";
-  setTimeout(function() {
-    status.innerHTML = "";
-  }, 750);
+    var deliciousCheck = document.getElementById("deliciousCheck");
+    var delicious = deliciousCheck.checked;
+    localStorage["delicious"] = delicious;
+    console.log("D:"+delicious);
+
+    // Update status to let user know options were saved.
+    var status = document.getElementById("status");
+    status.innerHTML = "Options Saved.";
+    setTimeout(function() {
+        status.innerHTML = "";
+    }, 750);
 }
 
 // Restores select box state to saved value from localStorage.
 function restore_options() {
-  var hostPort = localStorage["hostPort"];
-  if (!hostPort) {
-    return;
-  }
-  var hostPortText = document.getElementById("hostPortText");
-  hostPortText.value = hostPort;
+    var hostPort = localStorage["hostPort"];
+    console.log("HP:"+hostPort);
+    var hostPortText = document.getElementById("hostPortText");
+    if (hostPort) {
+        hostPortText.value = hostPort;
+    } else {
+        hostPortText.value = 'http://localhost:44865';
+    }
+
+    var delicious = localStorage["delicious"];
+    console.log("D:"+delicious);
+    var deliciousCheck = document.getElementById("deliciousCheck");
+    if (delicious === 'true') {
+        deliciousCheck.checked = delicious;
+    } else {
+        deliciousCheck.checked = false;
+    }
 }
 
 </script>
@@ -33,7 +50,10 @@ function restore_options() {
 Gitmarks host and port (http://localhost:44865 is the default):
 <input id="hostPortText" type="text" name="hostPort" value=""/>
 
-<br>
+<br/>
+
+Automatically use Delicious tags? <input id="deliciousCheck" type="checkbox" name="delicious" value=""/>
+<br/>
 <button onclick="save_options()">Save</button>
 <span id="status"></span>
 </body>

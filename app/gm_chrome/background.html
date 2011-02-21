@@ -1,0 +1,71 @@
+<html>
+<script language="javascript" src="md5.js"></script>
+
+  <script>
+    //React when a browser action's icon is clicked.
+    chrome.browserAction.onClicked.addListener(function(tab) {
+        bookmark(tab);
+    });
+
+    function bookmark(tab) {
+        var url;
+//        chrome.tabs.getSelected(null, function(tab) {
+        url = tab.url;
+        console.log("D:"+localStorage["delicious"]);
+        if (localStorage["delicious"] === 'true') loadDelTags(url);
+        else loadGitmark(url);
+//        });
+    }
+
+    function loadDelTags(url) {
+        console.log("Load Delicious");
+        var req0 = new XMLHttpRequest();
+        req0.open(
+            'GET',
+            'http://feeds.delicious.com/v2/json/urlinfo/'+hex_md5(url),
+            true);
+        req0.onload = parseDelTags(url, req0);
+        req0.send(null);
+    }
+
+    function parseDelTags(url, req0) {
+        console.log("Parse Delicious");
+        var delInfo;
+        var delTags = "";
+        delInfo = eval(req0.responseText);
+        if (delInfo && delInfo[0] && delInfo[0].top_tags) {
+            for (var key in delInfo[0].top_tags) {
+                delTags += key + " ";
+            }
+        }
+        loadGitmark(url, delTags);
+    }
+
+    function loadGitmark(url, delTags) {
+        console.log("Load Gitmark");
+        var req1 = new XMLHttpRequest();
+        req1.open(
+            'GET',
+            localStorage["hostPort"] + '/new?url=' +
+            url,
+            true);
+        req1.onload = displayGitmark(delTags, req1);
+        req1.send(null);
+    }
+
+    function displayGitmark(delTags, req1) {
+        console.log("Display Gitmark");
+        var savePage = req1.responseText.replace(/action="create"/, 'action="'+localStorage["hostPort"]+'/create"').replace(/name="tags" value="" class/, 'name="tags" value="'+delTags+'" class');
+        console.log(savePage);
+        chrome.browserAction.setIcon({path:"img/YellowStar.19.19.png"});
+        setTimeout(function() {
+          chrome.browserAction.setIcon({path:"img/BlackStar.19.19.png"});
+        }, 750);
+    }
+
+    function saveGitmark() {
+        ;
+    }
+  </script>
+</html>
+

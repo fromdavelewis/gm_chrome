@@ -6,9 +6,9 @@
              "48": "img/BlackStar.48.48.png",
             "128": "img/BlackStar.128.128.png" },
   "options_page": "options.html",
+  "background_page": "background.html",
   "browser_action": {
-    "default_icon": "img/BlackStar.19.19.png",
-    "popup": "popup.html"
+    "default_icon": "img/BlackStar.19.19.png"
   },
   "permissions": [
     "<all_urls>",
