@@ -1,9 +1,18 @@
 <html>
-<head><title>My Test Extension Options</title></head>
+<head><title>GM_Chrome Options</title></head>
 <script type="text/javascript">
 
 // Saves options to localStorage.
 function save_options() {
+    var gitmarksRadio = document.getElementById("gitmarksRadio");
+    var gitmarks = gitmarksRadio.checked;
+    var insipidRadio = document.getElementById("insipidRadio");
+    var insipid = insipidRadio.checked;
+    if (insipid === true) localStorage["bookmarkEngine"] = 'insipid';
+    else if (gitmarks === true) localStorage["bookmarkEngine"] = 'gitmarks';
+    else localStorage["bookmarkEngine"] = 'gitmarks';
+    console.log("BE:"+localStorage["bookmarkEngine"]);
+
     var hostPortText = document.getElementById("hostPortText");
     var hostPort = hostPortText.value;
     localStorage["hostPort"] = hostPort;
@@ -29,6 +38,13 @@ function save_options() {
 
 // Restores select box state to saved value from localStorage.
 function restore_options() {
+    var bookmarkEngine = localStorage["bookmarkEngine"];
+    var gitmarksRadio = document.getElementById("gitmarksRadio");
+    var insipidRadio = document.getElementById("insipidRadio");
+    if (bookmarkEngine === 'insipid') insipidRadio.checked = true;
+    else if (bookmarkEngine === 'gitmarks') gitmarksRadio.checked = true;
+    else gitmarksRadio.checked = true;
+
     var hostPort = localStorage["hostPort"];
     console.log("HP:"+hostPort);
     var hostPortText = document.getElementById("hostPortText");
@@ -61,7 +77,11 @@ function restore_options() {
 
 <body onload="restore_options()">
 
-Gitmarks host and port (http://localhost:44865 is the default):
+Bookmarks Engine: gitmarks <input id="gitmarksRadio" type="radio" name="bookmarkEngine" value="gitmarks"/> insipid <input id="insipidRadio" type="radio" name="bookmarkEngine" value="insipid"/>
+
+<br/>
+
+Gitmarks/Insipid host and port (http://localhost:44865 is the default):
 <input id="hostPortText" type="text" name="hostPort" value=""/>
 <br/>
 
