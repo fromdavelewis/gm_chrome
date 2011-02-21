@@ -8,8 +8,8 @@ function save_options() {
     var gitmarks = gitmarksRadio.checked;
     var insipidRadio = document.getElementById("insipidRadio");
     var insipid = insipidRadio.checked;
-    if (insipid === true) localStorage["bookmarkEngine"] = 'insipid';
-    else if (gitmarks === true) localStorage["bookmarkEngine"] = 'gitmarks';
+    if (gitmarks === true) localStorage["bookmarkEngine"] = 'gitmarks';
+    else if (insipid === true) localStorage["bookmarkEngine"] = 'insipid';
     else localStorage["bookmarkEngine"] = 'gitmarks';
     console.log("BE:"+localStorage["bookmarkEngine"]);
 
@@ -41,8 +41,8 @@ function restore_options() {
     var bookmarkEngine = localStorage["bookmarkEngine"];
     var gitmarksRadio = document.getElementById("gitmarksRadio");
     var insipidRadio = document.getElementById("insipidRadio");
-    if (bookmarkEngine === 'insipid') insipidRadio.checked = true;
-    else if (bookmarkEngine === 'gitmarks') gitmarksRadio.checked = true;
+    if (bookmarkEngine === 'gitmarks') gitmarksRadio.checked = true;
+    else if (bookmarkEngine === 'insipid') insipidRadio.checked = true;
     else gitmarksRadio.checked = true;
 
     var hostPort = localStorage["hostPort"];
