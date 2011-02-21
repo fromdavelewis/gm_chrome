@@ -2,23 +2,17 @@
 <script language="javascript" src="md5.js"></script>
 
   <script>
-    //React when a browser action's icon is clicked.
     chrome.browserAction.onClicked.addListener(function(tab) {
         bookmark(tab);
     });
 
     function bookmark(tab) {
-        var url;
-//        chrome.tabs.getSelected(null, function(tab) {
-        url = tab.url;
-        console.log("D:"+localStorage["delicious"]);
+        var url = tab.url;
         if (localStorage["delicious"] === 'true') loadDelTags(url);
-        else loadGitmark(url);
-//        });
+        else gitmark(url);
     }
 
     function loadDelTags(url) {
-        console.log("Load Delicious");
         var req0 = new XMLHttpRequest();
         req0.open(
             'GET',
@@ -29,42 +23,56 @@
     }
 
     function parseDelTags(url, req0) {
-        console.log("Parse Delicious");
-        var delInfo;
         var delTags = "";
-        delInfo = eval(req0.responseText);
+        var delInfo = eval(req0.responseText);
         if (delInfo && delInfo[0] && delInfo[0].top_tags) {
             for (var key in delInfo[0].top_tags) {
                 delTags += key + " ";
             }
         }
-        loadGitmark(url, delTags);
+        gitmark(url, delTags);
+    }
+
+    function gitmark(url, delTags) {
+        if (localStorage["saveDirectly"] === 'true') saveGitmark(url, delTags);
+        else loadGitmark(url, delTags);
     }
 
     function loadGitmark(url, delTags) {
-        console.log("Load Gitmark");
         var req1 = new XMLHttpRequest();
         req1.open(
             'GET',
             localStorage["hostPort"] + '/new?url=' +
             url,
             true);
-        req1.onload = displayGitmark(delTags, req1);
+        req1.onload = displayGitmark(url, delTags, req1);
         req1.send(null);
     }
 
-    function displayGitmark(delTags, req1) {
-        console.log("Display Gitmark");
+    function displayGitmark(url, delTags, req1) {
         var savePage = req1.responseText.replace(/action="create"/, 'action="'+localStorage["hostPort"]+'/create"').replace(/name="tags" value="" class/, 'name="tags" value="'+delTags+'" class');
-        console.log(savePage);
         chrome.browserAction.setIcon({path:"img/YellowStar.19.19.png"});
         setTimeout(function() {
           chrome.browserAction.setIcon({path:"img/BlackStar.19.19.png"});
         }, 750);
     }
 
-    function saveGitmark() {
-        ;
+    function saveGitmark(url, delTags) {
+        var req2 = new XMLHttpRequest();
+        req2.open(
+            'POST',
+            localStorage["hostPort"] + '/create',
+            true);
+        req2.onload = successfulSave;
+        req2.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        req2.send('url='+escape(url)+'&tags='+escape(delTags));
+    }
+
+    function successfulSave() {
+        chrome.browserAction.setIcon({path:"img/GreenStar.19.19.png"});
+        setTimeout(function() {
+          chrome.browserAction.setIcon({path:"img/BlackStar.19.19.png"});
+        }, 750);
     }
   </script>
 </html>

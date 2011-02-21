@@ -14,6 +14,11 @@ function save_options() {
     localStorage["delicious"] = delicious;
     console.log("D:"+delicious);
 
+    var saveDirectlyCheck = document.getElementById("saveDirectlyCheck");
+    var saveDirectly = saveDirectlyCheck.checked;
+    localStorage["saveDirectly"] = saveDirectly;
+    console.log("SD:"+saveDirectly);
+
     // Update status to let user know options were saved.
     var status = document.getElementById("status");
     status.innerHTML = "Options Saved.";
@@ -41,6 +46,15 @@ function restore_options() {
     } else {
         deliciousCheck.checked = false;
     }
+
+    var saveDirectly = localStorage["saveDirectly"];
+    console.log("SD:"+saveDirectly);
+    var saveDirectlyCheck = document.getElementById("saveDirectlyCheck");
+    if (saveDirectly === 'true') {
+        saveDirectlyCheck.checked = saveDirectly;
+    } else {
+        saveDirectlyCheck.checked = false;
+    }
 }
 
 </script>
@@ -49,10 +63,12 @@ function restore_options() {
 
 Gitmarks host and port (http://localhost:44865 is the default):
 <input id="hostPortText" type="text" name="hostPort" value=""/>
-
 <br/>
 
 Automatically use Delicious tags? <input id="deliciousCheck" type="checkbox" name="delicious" value=""/>
+<br/>
+
+Save with no confirmation? <input id="saveDirectlyCheck" type="checkbox" name="saveDirectly" value=""/>
 <br/>
 <button onclick="save_options()">Save</button>
 <span id="status"></span>
