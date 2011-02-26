@@ -1,0 +1,20 @@
+<html>
+  <script>
+chrome.extension.onRequest.addListener(
+function(request, sender, sendResponse) {
+    setContent(request.greeting);
+    console.log("D:"+request.greeting);
+      sendResponse({}); // snub them.
+  });
+
+  function setContent(contents) {
+      document.getElementById('target').innerHTML = contents;
+    }
+  
+  </script>
+
+  <body>
+      <div id="target"></div>
+  </body>
+</html>
+

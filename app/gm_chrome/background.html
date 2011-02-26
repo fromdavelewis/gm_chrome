@@ -1,5 +1,7 @@
 <html>
-<script language="javascript" src="md5.js"></script>
+<script language="javascript" src="js/md5.js"></script>
+<script language="javascript" src="js/gitmarks.js"></script>
+<script language="javascript" src="js/insipid.js"></script>
 
   <script>
     chrome.browserAction.onClicked.addListener(function(tab) {
@@ -23,6 +25,7 @@
     }
 
     function parseDelTags(url, req0) {
+console.log('pd:'+req0.responseText);
         var delTags = "";
         var delInfo = eval(req0.responseText);
         if (delInfo && delInfo[0] && delInfo[0].top_tags) {
@@ -45,12 +48,19 @@
             localStorage["hostPort"] + '/new?url=' +
             url,
             true);
-        req1.onload = displayGitmark(url, delTags, req1);
+            req1.onreadystatechange = function() {
+                if (req1.readyState == 4 && req1.status == 200) displayGitmark(url, delTags, req1);
+            };
         req1.send(null);
     }
 
+
     function displayGitmark(url, delTags, req1) {
         var savePage = req1.responseText.replace(/action="create"/, 'action="'+localStorage["hostPort"]+'/create"').replace(/name="tags" value="" class/, 'name="tags" value="'+delTags+'" class');
+        var viewTabUrl = chrome.extension.getURL('dialog.html');
+        chrome.tabs.create({url:viewTabUrl}, function(tab) {
+            chrome.tabs.sendRequest(tab.id, {greeting: savePage});
+        });
         chrome.browserAction.setIcon({path:"img/YellowStar.19.19.png"});
         setTimeout(function() {
           chrome.browserAction.setIcon({path:"img/BlackStar.19.19.png"});
