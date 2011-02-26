@@ -1,12 +1,15 @@
-From http://code.google.com/chrome/extensions/getstarted.html:
+Based on http://code.google.com/chrome/extensions/getstarted.html:
 
-1. Launch Chrome.
+1. Start gitmarks.
 
-2. Bring up the extensions management page by clicking the wrench icon and choosing Tools > Extensions.
+2. Launch Chrome.
 
-3. If Developer mode has a + by it, click the + to add developer information to the page. The + changes to a -, and more buttons and information appear.
+3. Bring up the extensions management page by clicking the wrench icon and choosing Tools > Extensions.
 
-4. Click the Load unpacked extension button. A file dialog appears.
+4. If Developer mode has a + by it, click the + to add developer information to the page. The + changes to a -, and more buttons and information appear.
 
-5. In the file dialog, navigate to GIT_CHECKOUT/app/gm_chrome and click OK.
+5. Click the Load unpacked extension button. A file dialog appears.
 
+6. In the file dialog, navigate to GIT_CHECKOUT/app/gm_chrome and click OK.
+
+7. Configure GM Chrome via the options link.
