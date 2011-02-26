@@ -20,12 +20,13 @@
             'GET',
             'http://feeds.delicious.com/v2/json/urlinfo/'+hex_md5(url),
             true);
-        req0.onload = parseDelTags(url, req0);
+            req0.onreadystatechange = function() {
+                if (req0.readyState == 4 && req0.status == 200) parseDelTags(url, req0);
+            };
         req0.send(null);
     }
 
     function parseDelTags(url, req0) {
-console.log('pd:'+req0.responseText);
         var delTags = "";
         var delInfo = eval(req0.responseText);
         if (delInfo && delInfo[0] && delInfo[0].top_tags) {
@@ -73,7 +74,9 @@ console.log('pd:'+req0.responseText);
             'POST',
             localStorage["hostPort"] + '/create',
             true);
-        req2.onload = successfulSave;
+        req2.onreadystatechange = function() {
+            if (req2.readyState == 4 && req2.status == 200) successfulSave();
+        };
         req2.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
         req2.send('url='+escape(url)+'&tags='+escape(delTags));
     }
